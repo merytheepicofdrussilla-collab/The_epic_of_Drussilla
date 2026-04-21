@@ -1,0 +1,1914 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ملحمة دروسيلا</title>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;900&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Amiri:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+  /* MJ_Sanaa font — user must place MJ_Sanaa.ttf/woff2 next to this file.
+     If not found, falls back to Amiri for Arabic. */
+  @font-face {
+    font-family: 'MJ_Sanaa';
+    src: url('MJ_Sanaa.woff2') format('woff2'),
+         url('MJ_Sanaa.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+  }
+  :root { --title-font: 'MJ_Sanaa', 'Amiri', serif; }
+</style>
+<style>
+  :root {
+    --gold: #c9a84c;
+    --gold-light: #e8c97a;
+    --gold-dim: #7a6330;
+    --bg-void: #05040a;
+    --bg-deep: #0a0912;
+    --bg-surface: #100e1a;
+    --bg-card: #140f20;
+    --bg-card-hover: #1c1530;
+    --text-primary: #e8e0d0;
+    --text-secondary: #a09080;
+    --text-muted: #60504a;
+    --crimson: #8b1a2e;
+    --crimson-light: #c0304a;
+    --midnight: #1a1535;
+    --border: rgba(201,168,76,0.15);
+    --border-bright: rgba(201,168,76,0.4);
+    --nav-h: 60px;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg-void);
+    color: var(--text-primary);
+    font-family: 'Amiri', serif;
+    line-height: 1.8;
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* NOISE OVERLAY */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 0;
+    opacity: 0.4;
+  }
+
+  /* FIXED NAV */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    height: var(--nav-h);
+    background: rgba(5,4,10,0.92);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 40px;
+  }
+
+  .nav-title {
+    font-family: 'Amiri', serif;
+    font-size: 1.3rem;
+    color: var(--gold);
+    letter-spacing: 0.05em;
+    text-decoration: none;
+  }
+
+  .nav-links {
+    display: flex;
+    gap: 4px;
+    list-style: none;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+  }
+
+  .nav-links a {
+    font-family: 'Amiri', serif;
+    font-size: 0.62rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--text-secondary);
+    text-decoration: none;
+    padding: 6px 10px;
+    border: 1px solid transparent;
+    transition: all 0.3s;
+    white-space: nowrap;
+  }
+
+  .nav-links a:hover {
+    color: var(--gold);
+    border-color: var(--border);
+    background: rgba(201,168,76,0.05);
+  }
+
+  /* HERO */
+  #hero {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    text-align: center;
+    padding: 80px 20px 60px;
+    overflow: hidden;
+  }
+
+  .hero-bg {
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(ellipse 60% 50% at 50% 40%, rgba(139,26,46,0.12) 0%, transparent 70%),
+      radial-gradient(ellipse 80% 60% at 50% 100%, rgba(26,21,53,0.5) 0%, transparent 70%);
+  }
+
+  .hero-ornament {
+    width: 180px;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, var(--gold), transparent);
+    margin: 0 auto 40px;
+    position: relative;
+  }
+
+  .hero-ornament::before, .hero-ornament::after {
+    content: '✦';
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--gold);
+    font-size: 10px;
+  }
+  .hero-ornament::before { left: 20%; }
+  .hero-ornament::after { right: 20%; }
+
+  .hero-tagline {
+    font-family: 'Amiri', serif;
+    font-size: 0.7rem;
+    letter-spacing: 0.35em;
+    text-transform: uppercase;
+    color: var(--gold-dim);
+    margin-bottom: 28px;
+    position: relative;
+  }
+
+  .hero-title {
+    font-family: var(--title-font);
+    font-size: clamp(3.5rem, 9vw, 8rem);
+    font-weight: 700;
+    color: var(--text-primary);
+    line-height: 1.1;
+    letter-spacing: 0.02em;
+    text-shadow: 0 0 80px rgba(201,168,76,0.2);
+    position: relative;
+    margin-bottom: 12px;
+  }
+
+  .hero-subtitle-en {
+    font-family: 'Amiri', serif;
+    font-size: clamp(1rem, 2.5vw, 1.8rem);
+    color: var(--gold);
+    letter-spacing: 0.2em;
+    margin-bottom: 40px;
+    position: relative;
+  }
+
+  .hero-desc {
+    max-width: 600px;
+    font-size: 1.15rem;
+    color: var(--text-secondary);
+    font-style: italic;
+    line-height: 2;
+    position: relative;
+    margin-bottom: 50px;
+  }
+
+  .hero-cta {
+    display: inline-flex;
+    gap: 20px;
+    position: relative;
+  }
+
+  .btn {
+    font-family: 'Amiri', serif;
+    font-size: 0.7rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    text-decoration: none;
+    padding: 14px 32px;
+    border: 1px solid var(--gold-dim);
+    color: var(--gold);
+    background: transparent;
+    cursor: pointer;
+    transition: all 0.4s;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .btn::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: rgba(201,168,76,0.08);
+    transform: translateX(-100%);
+    transition: transform 0.4s;
+  }
+
+  .btn:hover::before { transform: translateX(0); }
+  .btn:hover { border-color: var(--gold); color: var(--gold-light); }
+
+  .btn-solid {
+    background: rgba(201,168,76,0.1);
+    border-color: var(--gold);
+  }
+
+  /* SECTIONS */
+  section {
+    position: relative;
+    z-index: 1;
+    padding: 80px 40px;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  .section-divider {
+    width: 100%;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--border-bright), transparent);
+    margin: 20px 0;
+    position: relative;
+    z-index: 1;
+  }
+
+  .section-header {
+    text-align: center;
+    margin-bottom: 60px;
+  }
+
+  .section-label {
+    font-family: 'Amiri', serif;
+    font-size: 0.65rem;
+    letter-spacing: 0.4em;
+    text-transform: uppercase;
+    color: var(--gold-dim);
+    display: block;
+    margin-bottom: 14px;
+  }
+
+  .section-title {
+    font-family: var(--title-font);
+    font-size: clamp(1.8rem, 4vw, 3rem);
+    color: var(--text-primary);
+    font-weight: 700;
+  }
+
+  .section-title-en {
+    font-family: 'Amiri', serif;
+    font-size: 0.8rem;
+    letter-spacing: 0.25em;
+    color: var(--gold);
+    text-transform: uppercase;
+    margin-top: 8px;
+  }
+
+  /* CARDS */
+  .card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    padding: 32px;
+    position: relative;
+    transition: all 0.4s;
+  }
+
+  .card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--gold-dim), transparent);
+    opacity: 0;
+    transition: opacity 0.4s;
+  }
+
+  .card:hover {
+    background: var(--bg-card-hover);
+    border-color: var(--border-bright);
+  }
+
+  .card:hover::before { opacity: 1; }
+
+  /* CHARACTERS */
+  .chars-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 2px;
+  }
+
+  .char-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    padding: 0;
+    overflow: hidden;
+    transition: all 0.4s;
+    cursor: pointer;
+  }
+
+  .char-card:hover { border-color: var(--border-bright); transform: translateY(-3px); }
+
+  .char-img-area {
+    height: 220px;
+    background: var(--midnight);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .char-img-placeholder {
+    width: 80px;
+    height: 80px;
+    border: 1px solid var(--border-bright);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Amiri', serif;
+    font-size: 2rem;
+    color: var(--gold);
+  }
+
+  .char-race-badge {
+    position: absolute;
+    top: 14px;
+    right: 14px;
+    font-family: 'Amiri', serif;
+    font-size: 0.55rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    padding: 4px 10px;
+    border: 1px solid var(--border-bright);
+    color: var(--gold);
+    background: rgba(5,4,10,0.8);
+  }
+
+  .char-info {
+    padding: 20px 24px 24px;
+  }
+
+  .char-name-ar {
+    font-family: 'Amiri', serif;
+    font-size: 1.3rem;
+    color: var(--text-primary);
+    font-weight: 700;
+  }
+
+  .char-name-en {
+    font-family: 'Amiri', serif;
+    font-size: 0.7rem;
+    letter-spacing: 0.15em;
+    color: var(--gold);
+    text-transform: uppercase;
+    margin-bottom: 12px;
+  }
+
+  .char-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-top: 14px;
+  }
+
+  .char-tag {
+    font-family: 'Amiri', serif;
+    font-size: 0.55rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 3px 8px;
+    border: 1px solid var(--border);
+    color: var(--text-muted);
+  }
+
+  .char-tag.mbti {
+    border-color: rgba(139,26,46,0.5);
+    color: var(--crimson-light);
+  }
+
+  .char-role-badge {
+    display: inline-block;
+    font-family: 'Amiri', serif;
+    font-size: 0.55rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    padding: 3px 10px;
+    background: rgba(139,26,46,0.15);
+    border: 1px solid rgba(139,26,46,0.4);
+    color: var(--crimson-light);
+    margin-bottom: 4px;
+  }
+
+  /* MODAL */
+  .modal-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(5,4,10,0.92);
+    z-index: 2000;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+  }
+
+  .modal-overlay.active { display: flex; }
+
+  .modal {
+    background: var(--bg-card);
+    border: 1px solid var(--border-bright);
+    max-width: 700px;
+    width: 100%;
+    max-height: 85vh;
+    overflow-y: auto;
+    position: relative;
+    direction: rtl;
+  }
+
+  .modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    padding: 30px 30px 20px;
+    border-bottom: 1px solid var(--border);
+    direction: rtl;
+  }
+
+  .modal-close {
+    background: none;
+    border: 1px solid var(--border);
+    color: var(--text-secondary);
+    width: 32px;
+    height: 32px;
+    cursor: pointer;
+    font-size: 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    transition: all 0.3s;
+  }
+
+  .modal-close:hover { border-color: var(--crimson-light); color: var(--crimson-light); }
+
+  .modal-body {
+    padding: 28px 30px;
+  }
+
+  .modal-img-area {
+    width: 100%;
+    height: 260px;
+    background: var(--midnight);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 28px;
+    border: 1px solid var(--border);
+  }
+
+  .stat-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin-bottom: 24px;
+  }
+
+  .stat-item {
+    padding: 12px 16px;
+    background: var(--bg-surface);
+    border: 1px solid var(--border);
+  }
+
+  .stat-label {
+    font-family: 'Amiri', serif;
+    font-size: 0.58rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    margin-bottom: 4px;
+  }
+
+  .stat-value {
+    font-size: 1rem;
+    color: var(--text-primary);
+    font-family: 'Amiri', serif;
+  }
+
+  /* KINGDOMS */
+  .kingdoms-tabs {
+    display: flex;
+    gap: 2px;
+    margin-bottom: 2px;
+    flex-wrap: wrap;
+  }
+
+  .tab-btn {
+    font-family: 'Amiri', serif;
+    font-size: 0.62rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    padding: 10px 20px;
+    border: 1px solid var(--border);
+    background: transparent;
+    color: var(--text-muted);
+    cursor: pointer;
+    transition: all 0.3s;
+  }
+
+  .tab-btn.active, .tab-btn:hover {
+    background: rgba(201,168,76,0.08);
+    border-color: var(--border-bright);
+    color: var(--gold);
+  }
+
+  .tab-content { display: none; }
+  .tab-content.active { display: block; }
+
+  .kingdom-panel {
+    background: var(--bg-card);
+    border: 1px solid var(--border-bright);
+    padding: 40px;
+  }
+
+  .kingdom-name {
+    font-family: var(--title-font);
+    font-size: 2rem;
+    color: var(--gold);
+    margin-bottom: 6px;
+  }
+
+  .kingdom-subtitle {
+    font-family: 'Amiri', serif;
+    font-size: 0.65rem;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    margin-bottom: 30px;
+  }
+
+  .kingdom-section-tabs {
+    display: flex;
+    gap: 2px;
+    margin-bottom: 24px;
+  }
+
+  .k-tab {
+    font-family: 'Amiri', serif;
+    font-size: 0.6rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    padding: 8px 18px;
+    border: 1px solid var(--border);
+    background: transparent;
+    color: var(--text-muted);
+    cursor: pointer;
+    transition: all 0.3s;
+  }
+
+  .k-tab.active, .k-tab:hover {
+    background: rgba(201,168,76,0.06);
+    border-color: var(--border-bright);
+    color: var(--gold);
+  }
+
+  .k-tab-content { display: none; }
+  .k-tab-content.active { display: block; }
+
+  .kingdom-info-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+    margin-bottom: 24px;
+  }
+
+  .k-info-item {
+    padding: 14px;
+    background: var(--bg-surface);
+    border: 1px solid var(--border);
+    text-align: center;
+  }
+
+  .map-placeholder {
+    width: 100%;
+    height: 300px;
+    background: var(--midnight);
+    border: 1px dashed var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: 12px;
+    color: var(--text-muted);
+    font-family: 'Amiri', serif;
+    font-size: 0.65rem;
+    letter-spacing: 0.2em;
+  }
+
+  /* RACES / POWER HOLDERS */
+  .races-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 24px;
+  }
+
+  .race-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    padding: 30px;
+    position: relative;
+    overflow: hidden;
+    transition: all 0.4s;
+  }
+
+  .race-card::after {
+    content: '';
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, var(--gold-dim), transparent);
+    opacity: 0;
+    transition: opacity 0.4s;
+  }
+
+  .race-card:hover { border-color: var(--border-bright); }
+  .race-card:hover::after { opacity: 1; }
+
+  .race-type {
+    font-family: 'Amiri', serif;
+    font-size: 0.6rem;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--gold-dim);
+    margin-bottom: 10px;
+  }
+
+  .race-name {
+    font-family: 'Amiri', serif;
+    font-size: 1.5rem;
+    color: var(--text-primary);
+    margin-bottom: 14px;
+  }
+
+  .power-bar-label {
+    font-family: 'Amiri', serif;
+    font-size: 0.58rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    margin-bottom: 6px;
+    margin-top: 16px;
+  }
+
+  .power-bar {
+    height: 3px;
+    background: var(--border);
+    position: relative;
+    margin-bottom: 4px;
+  }
+
+  .power-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--gold-dim), var(--gold));
+    position: relative;
+  }
+
+  /* LEGENDS */
+  .legend-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    padding: 36px 40px;
+    margin-bottom: 2px;
+    position: relative;
+    cursor: pointer;
+    transition: all 0.4s;
+  }
+
+  .legend-card:hover { border-color: var(--border-bright); background: var(--bg-card-hover); }
+
+  .legend-era {
+    font-family: 'Amiri', serif;
+    font-size: 0.58rem;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--gold-dim);
+    margin-bottom: 8px;
+  }
+
+  .legend-title {
+    font-family: 'Amiri', serif;
+    font-size: 1.4rem;
+    color: var(--text-primary);
+    margin-bottom: 12px;
+    font-weight: 700;
+  }
+
+  .legend-excerpt {
+    color: var(--text-secondary);
+    font-style: italic;
+    font-size: 1rem;
+  }
+
+  .legend-expand-btn {
+    position: absolute;
+    top: 36px;
+    left: 40px;
+    font-size: 1.2rem;
+    color: var(--gold-dim);
+    transition: transform 0.3s;
+  }
+
+  .legend-card.open .legend-expand-btn { transform: rotate(45deg); color: var(--gold); }
+
+  .legend-body {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.5s ease;
+    margin-top: 0;
+  }
+
+  .legend-card.open .legend-body {
+    max-height: 600px;
+    margin-top: 20px;
+    padding-top: 20px;
+    border-top: 1px solid var(--border);
+  }
+
+  /* THEORIES - PUBLIC COMMENTS */
+  .comment-area {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .comment-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    padding: 24px;
+  }
+
+  .comment-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 14px;
+  }
+
+  .comment-avatar {
+    width: 36px;
+    height: 36px;
+    border: 1px solid var(--border-bright);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Amiri', serif;
+    font-size: 0.7rem;
+    color: var(--gold);
+    background: var(--bg-surface);
+    flex-shrink: 0;
+  }
+
+  .comment-name {
+    font-family: 'Amiri', serif;
+    font-size: 0.75rem;
+    letter-spacing: 0.1em;
+    color: var(--text-primary);
+  }
+
+  .comment-date {
+    font-size: 0.75rem;
+    color: var(--text-muted);
+    font-style: italic;
+  }
+
+  .comment-text {
+    color: var(--text-secondary);
+    font-size: 1rem;
+    line-height: 1.8;
+  }
+
+  .comment-form {
+    background: var(--bg-surface);
+    border: 1px solid var(--border);
+    padding: 28px;
+    margin-top: 24px;
+  }
+
+  .comment-form h3 { font-family: 'Amiri', serif;
+    font-family: 'Amiri', serif;
+    font-size: 0.7rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 20px;
+  }
+
+  .form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+    margin-bottom: 14px;
+  }
+
+  .form-field {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  .form-field label {
+    font-family: 'Amiri', serif;
+    font-size: 0.58rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+  }
+
+  .form-field input, .form-field textarea {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    color: var(--text-primary);
+    padding: 10px 14px;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1rem;
+    outline: none;
+    transition: border-color 0.3s;
+    width: 100%;
+  }
+
+  .form-field textarea { resize: vertical; min-height: 100px; }
+  .form-field input:focus, .form-field textarea:focus { border-color: var(--border-bright); }
+
+  /* FEEDBACK (private) */
+  .feedback-form {
+    max-width: 700px;
+    margin: 0 auto;
+  }
+
+  .feedback-note {
+    background: rgba(139,26,46,0.08);
+    border: 1px solid rgba(139,26,46,0.25);
+    padding: 14px 20px;
+    margin-bottom: 28px;
+    font-family: 'Amiri', serif;
+    font-size: 0.62rem;
+    letter-spacing: 0.1em;
+    color: var(--crimson-light);
+    text-align: center;
+  }
+
+  /* AUTHOR */
+  .author-section {
+    display: grid;
+    grid-template-columns: 280px 1fr;
+    gap: 50px;
+    align-items: start;
+  }
+
+  .author-portrait {
+    width: 100%;
+    aspect-ratio: 3/4;
+    background: var(--midnight);
+    border: 1px solid var(--border-bright);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: 12px;
+    color: var(--text-muted);
+    font-family: 'Amiri', serif;
+    font-size: 0.62rem;
+    letter-spacing: 0.2em;
+  }
+
+  .author-symbol {
+    font-size: 3rem;
+    color: var(--gold-dim);
+    font-family: 'Amiri', serif;
+  }
+
+  .update-item {
+    border-bottom: 1px solid var(--border);
+    padding: 20px 0;
+  }
+
+  .update-item:last-child { border-bottom: none; }
+
+  .update-date {
+    font-family: 'Amiri', serif;
+    font-size: 0.6rem;
+    letter-spacing: 0.2em;
+    color: var(--gold-dim);
+    margin-bottom: 8px;
+  }
+
+  .update-title {
+    font-family: 'Amiri', serif;
+    font-size: 1.1rem;
+    color: var(--text-primary);
+    margin-bottom: 8px;
+  }
+
+  /* FOOTER */
+  footer {
+    border-top: 1px solid var(--border);
+    padding: 40px;
+    text-align: center;
+    position: relative;
+    z-index: 1;
+  }
+
+  .footer-title {
+    font-family: var(--title-font);
+    font-size: 1.6rem;
+    color: var(--gold);
+    margin-bottom: 8px;
+  }
+
+  .footer-copy {
+    font-family: 'Amiri', serif;
+    font-size: 0.58rem;
+    letter-spacing: 0.2em;
+    color: var(--text-muted);
+    margin-top: 20px;
+  }
+
+  /* SCROLL ANIMATIONS */
+  .fade-up {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+  }
+
+  .fade-up.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* SCROLLBAR */
+  ::-webkit-scrollbar { width: 6px; }
+  ::-webkit-scrollbar-track { background: var(--bg-void); }
+  ::-webkit-scrollbar-thumb { background: var(--border-bright); }
+  ::-webkit-scrollbar-thumb:hover { background: var(--gold); }
+
+  /* HERO IMAGE UPLOAD */
+  .hero-img-overlay {
+    position: absolute;
+    inset: 0;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    z-index: 0;
+    transition: opacity 0.5s;
+  }
+  .hero-img-overlay::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg, rgba(5,4,10,0.55) 0%, rgba(5,4,10,0.75) 100%);
+  }
+  .hero-upload-btn {
+    position: absolute;
+    bottom: 28px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-family: 'Amiri', serif;
+    font-size: 0.58rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    background: rgba(5,4,10,0.6);
+    border: 1px solid var(--border);
+    padding: 8px 18px;
+    cursor: pointer;
+    z-index: 10;
+    transition: all 0.3s;
+    white-space: nowrap;
+  }
+  .hero-upload-btn:hover { color: var(--gold); border-color: var(--border-bright); }
+
+  /* RACE CARD LOGO AREA */
+  .race-logo-area {
+    width: 80px;
+    height: 80px;
+    border: 1px dashed var(--border-bright);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 18px;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+    transition: border-color 0.3s;
+    background: var(--bg-surface);
+    flex-shrink: 0;
+  }
+  .race-logo-area:hover { border-color: var(--gold); }
+  .race-logo-area img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 50%;
+  }
+  .race-logo-placeholder {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+    color: var(--text-muted);
+    font-family: 'Amiri', serif;
+    font-size: 0.5rem;
+    letter-spacing: 0.15em;
+    text-align: center;
+    pointer-events: none;
+  }
+  .race-logo-placeholder svg { width: 22px; height: 22px; }
+  .race-card-header { display: flex; align-items: center; gap: 18px; margin-bottom: 14px; }
+  .race-card-header-text { flex: 1; }
+
+  /* CHAR IMAGE UPLOAD */
+  .char-img-area {
+    position: relative;
+  }
+  .char-img-upload-hint {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(5,4,10,0.55);
+    opacity: 0;
+    transition: opacity 0.3s;
+    font-family: 'Amiri', serif;
+    font-size: 0.55rem;
+    letter-spacing: 0.15em;
+    color: var(--gold);
+    text-transform: uppercase;
+    cursor: pointer;
+    flex-direction: column;
+    gap: 6px;
+  }
+  .char-card:hover .char-img-upload-hint { opacity: 1; }
+  .char-img-area img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    position: absolute;
+    inset: 0;
+  }
+  .modal-img-area {
+    position: relative;
+    cursor: pointer;
+  }
+  .modal-img-upload-hint {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(5,4,10,0.6);
+    opacity: 0;
+    transition: opacity 0.3s;
+    font-family: 'Amiri', serif;
+    font-size: 0.6rem;
+    letter-spacing: 0.18em;
+    color: var(--gold);
+    text-transform: uppercase;
+    flex-direction: column;
+    gap: 8px;
+  }
+  .modal-img-area:hover .modal-img-upload-hint { opacity: 1; }
+  .modal-img-area img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    position: absolute;
+    inset: 0;
+  }
+</style>
+</head>
+<body>
+
+<!-- NAVIGATION -->
+<nav>
+  <a href="#hero" class="nav-title">ملحمة دروسيلا</a>
+  <ul class="nav-links">
+    <li><a href="#characters">الشخصيات</a></li>
+    <li><a href="#races">الأجناس والقوى</a></li>
+    <li><a href="#kingdoms">الممالك</a></li>
+    <li><a href="#legends">الأساطير والموروث</a></li>
+    <li><a href="#theories">النظريات</a></li>
+    <li><a href="#feedback">ملاحظاتكم</a></li>
+    <li><a href="#author">الكاتبة</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-bg"></div>
+  <div id="heroBgImg" class="hero-img-overlay" style="display:none;"></div>
+  <div class="hero-ornament"></div>
+  <p class="hero-tagline">ملحمة فانتازيا مظلمة</p>
+  <h1 class="hero-title">ملحمة دروسيلا</h1>
+  
+  <p class="hero-desc">
+    في عالمٍ تتذكّر فيه الدماء ما نسيه الأحياء،
+    تتحرّك قوى قديمة تحت عظام الممالك.<br>
+    بعض العروش بُنيت على الأكاذيب. وبعض الأساطير كانت تحذيرات.
+  </p>
+
+  <!-- Hidden file input for hero background -->
+  <input type="file" id="heroBgInput" accept="image/*" style="display:none;" onchange="setHeroBg(event)">
+  <button class="hero-upload-btn" onclick="document.getElementById('heroBgInput').click()">
+    ✦ &nbsp; أضيفي صورة الخلفية &nbsp; ✦
+  </button>
+</section>
+
+<div class="section-divider"></div>
+
+<!-- CHARACTERS -->
+<section id="characters">
+  <div class="section-header fade-up">
+    <span class="section-label">أبطال الملحمة</span>
+    <h2 class="section-title">الشخصيات</h2>
+    <p class="section-title-en" style="display:none">Characters</p>
+  </div>
+
+  <div class="chars-grid fade-up" id="charsGrid">
+    <!-- Sample characters — replace with real ones -->
+    <div class="char-card" onclick="openChar('drusilla')">
+      <div class="char-img-area" style="height:220px; background:var(--midnight); display:flex; align-items:center; justify-content:center; position:relative; overflow:hidden;">
+        <div class="char-img-placeholder" id="char-thumb-drusilla">د</div>
+        <span class="char-race-badge">بشري · نبيل</span>
+        <div class="char-img-upload-hint" onclick="event.stopPropagation(); triggerCharUpload('drusilla', 'char-thumb-drusilla')">
+          <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M3 16v2a2 2 0 002 2h14a2 2 0 002-2v-2M12 4v12m0-12-4 4m4-4 4 4"/></svg>
+          ارفعي صورة
+        </div>
+      </div>
+      <div class="char-info">
+        <div class="char-role-badge">البطلة</div>
+        <p class="char-name-ar">دروسيلا</p>
+        <p class="char-name-en">Drusilla</p>
+        <p style="color: var(--text-secondary); font-size: 0.95rem; font-style: italic; margin-bottom: 10px;">
+          "بعض الأسماء تصبح إرثًا. وأخرى تصبح لعنة."
+        </p>
+        <div class="char-tags">
+          <span class="char-tag mbti">INTJ</span>
+          <span class="char-tag">دم نبيل</span>
+          <span class="char-tag">استراتيجية</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="char-card" onclick="openChar('char2')">
+      <div class="char-img-area" style="height:220px; background:var(--midnight); display:flex; align-items:center; justify-content:center; position:relative; overflow:hidden;">
+        <div class="char-img-placeholder" id="char-thumb-char2">؟</div>
+        <span class="char-race-badge">مجهول</span>
+        <div class="char-img-upload-hint" onclick="event.stopPropagation(); triggerCharUpload('char2', 'char-thumb-char2')">
+          <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M3 16v2a2 2 0 002 2h14a2 2 0 002-2v-2M12 4v12m0-12-4 4m4-4 4 4"/></svg>
+          ارفعي صورة
+        </div>
+      </div>
+      <div class="char-info">
+        <div class="char-role-badge">قريبًا</div>
+        <p class="char-name-ar">شخصية جديدة</p>
+        <p class="char-name-en">شخصية جديدة</p>
+        <p style="color: var(--text-muted); font-size: 0.9rem; font-style: italic; margin-bottom: 10px;">
+          الملف تحت الختم...
+        </p>
+        <div class="char-tags">
+          <span class="char-tag">???</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Add more character card placeholder -->
+    <div class="char-card" style="display:flex; align-items:center; justify-content:center; min-height:340px; cursor:default;">
+      <div style="text-align:center; color: var(--text-muted);">
+        <div style="font-size: 2.5rem; margin-bottom: 12px; color: var(--border-bright);">✦</div>
+        <p style="font-family: 'Amiri', serif; font-size: 0.62rem; letter-spacing: 0.2em; text-transform: uppercase;">المزيد قادم</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CHARACTER MODAL -->
+<div class="modal-overlay" id="charModal" onclick="closeModalOutside(event)">
+  <div class="modal">
+    <div class="modal-header">
+      <div>
+        <div id="modal-role" class="char-role-badge"></div>
+        <p id="modal-name-ar" class="char-name-ar" style="font-size: 1.8rem; margin-top: 8px;"></p>
+        <p id="modal-name-en" class="char-name-en"></p>
+      </div>
+      <button class="modal-close" onclick="closeChar()">✕</button>
+    </div>
+    <div class="modal-body">
+      <div class="modal-img-area" onclick="triggerModalImgUpload()">
+        <div id="modal-img-placeholder" style="font-family:'Amiri',serif; font-size:4rem; color: var(--gold-dim); position:relative; z-index:1;">د</div>
+        <div class="modal-img-upload-hint">
+          <svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M3 16v2a2 2 0 002 2h14a2 2 0 002-2v-2M12 4v12m0-12-4 4m4-4 4 4"/></svg>
+          ارفعي صورة للشخصية
+        </div>
+        <input type="file" id="modalImgInput" accept="image/*" style="display:none;" onchange="setModalImg(event)">
+      </div>
+      <div class="stat-grid" id="modal-stats"></div>
+      <p id="modal-bio" style="color: var(--text-secondary); font-style: italic; line-height: 1.9;"></p>
+      <div id="modal-tags" class="char-tags" style="margin-top: 20px;"></div>
+    </div>
+  </div>
+</div>
+
+<div class="section-divider"></div>
+
+<!-- RACES & POWER HOLDERS -->
+<section id="races">
+  <div class="section-header fade-up">
+    <span class="section-label">تراتبية الوجود</span>
+    <h2 class="section-title">الأجناس وحاملو القوى</h2>
+    <p class="section-title-en" style="display:none">Races & Power Holders</p>
+  </div>
+
+  <div class="races-grid fade-up">
+    <!-- HUMANS -->
+    <div class="race-card">
+      <div class="race-card-header">
+        <div class="race-logo-area" title="انقري لرفع شعار" onclick="triggerRaceLogoUpload(this)">
+          <div class="race-logo-placeholder">
+            <svg fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M3 16v2a2 2 0 002 2h14a2 2 0 002-2v-2M12 4v12m0-12-4 4m4-4 4 4"/></svg>
+            شعار
+          </div>
+          <input type="file" accept="image/*" style="display:none;" onchange="loadRaceLogo(this)">
+        </div>
+        <div class="race-card-header-text">
+          <p class="race-type">جنس فانٍ</p>
+          <p class="race-name">البشر</p>
+        </div>
+      </div>
+      <p style="color: var(--text-secondary); font-size: 0.95rem; line-height: 1.8; margin-bottom: 16px;">
+        قصيرو العمر لا يهدأون. طموحهم يعوّض عمّا تعجز عنه أجسادهم.
+        بعضهم وُلد بمواهب كامنة — نائمة حتى تُوقظها الدماء أو العهود.
+      </p>
+      <div class="power-bar-label">القوة الفطرية</div>
+      <div class="power-bar"><div class="power-fill" style="width: 30%"></div></div>
+      <div class="power-bar-label">النفوذ السياسي</div>
+      <div class="power-bar"><div class="power-fill" style="width: 85%"></div></div>
+      <div class="power-bar-label">القدرة على التكيّف</div>
+      <div class="power-bar"><div class="power-fill" style="width: 90%"></div></div>
+      <div class="char-tags" style="margin-top: 20px;">
+        <span class="char-tag">فانٍ</span>
+        <span class="char-tag">البيوت النبيلة</span>
+        <span class="char-tag">مواهب كامنة</span>
+      </div>
+    </div>
+
+    <!-- NON-HUMAN -->
+    <div class="race-card">
+      <div class="race-card-header">
+        <div class="race-logo-area" title="انقري لرفع شعار" onclick="triggerRaceLogoUpload(this)">
+          <div class="race-logo-placeholder">
+            <svg fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M3 16v2a2 2 0 002 2h14a2 2 0 002-2v-2M12 4v12m0-12-4 4m4-4 4 4"/></svg>
+            شعار
+          </div>
+          <input type="file" accept="image/*" style="display:none;" onchange="loadRaceLogo(this)">
+        </div>
+        <div class="race-card-header-text">
+          <p class="race-type">جنس قديم</p>
+          <p class="race-name">غير البشر</p>
+        </div>
+      </div>
+      <p style="color: var(--text-secondary); font-size: 0.95rem; line-height: 1.8; margin-bottom: 16px;">
+        أقدم من الممالك. طبيعتهم مقيّدة بالقوانين القديمة — بعضهم لا يستطيع الكذب،
+        وبعضهم لا يموت، وجميعهم يحملون ديناً للعالم الذي صنعهم.
+      </p>
+      <div class="power-bar-label">القوة الفطرية</div>
+      <div class="power-bar"><div class="power-fill" style="width: 75%"></div></div>
+      <div class="power-bar-label">النفوذ السياسي</div>
+      <div class="power-bar"><div class="power-fill" style="width: 45%"></div></div>
+      <div class="power-bar-label">طول العمر</div>
+      <div class="power-bar"><div class="power-fill" style="width: 95%"></div></div>
+      <div class="char-tags" style="margin-top: 20px;">
+        <span class="char-tag">دم قديم</span>
+        <span class="char-tag">مقيّد بالقوانين</span>
+        <span class="char-tag">ذاكرة أزلية</span>
+      </div>
+    </div>
+
+    <!-- POWER HOLDERS -->
+    <div class="race-card" style="border-color: rgba(201,168,76,0.3);">
+      <div class="race-card-header">
+        <div class="race-logo-area" title="انقري لرفع شعار" onclick="triggerRaceLogoUpload(this)" style="border-color: rgba(201,168,76,0.5);">
+          <div class="race-logo-placeholder" style="color: var(--gold-dim);">
+            <svg fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M3 16v2a2 2 0 002 2h14a2 2 0 002-2v-2M12 4v12m0-12-4 4m4-4 4 4"/></svg>
+            شعار
+          </div>
+          <input type="file" accept="image/*" style="display:none;" onchange="loadRaceLogo(this)">
+        </div>
+        <div class="race-card-header-text">
+          <p class="race-type" style="color: var(--gold);">تصنيف خاص</p>
+          <p class="race-name" style="color: var(--gold-light);">حاملو القوى — Power Holders</p>
+        </div>
+      </div>
+      <p style="color: var(--text-secondary); font-size: 0.95rem; line-height: 1.8; margin-bottom: 16px;">
+        لا هم بشرٌ كاملون ولا خالدون، قوّتهم مُمنوحة — أو مسلوبة.
+        يكسرون النظام الطبيعي بمجرّد وجودهم. والعالم لا يسامحهم على ذلك.
+      </p>
+      <div class="power-bar-label">القوة الخام</div>
+      <div class="power-bar"><div class="power-fill" style="width: 95%"></div></div>
+      <div class="power-bar-label">الاستقرار</div>
+      <div class="power-bar"><div class="power-fill" style="width: 25%"></div></div>
+      <div class="power-bar-label">الندرة</div>
+      <div class="power-bar"><div class="power-fill" style="width: 15%"></div></div>
+      <div class="char-tags" style="margin-top: 20px;">
+        <span class="char-tag mbti">طليق</span>
+        <span class="char-tag mbti">كاسرو العوالم</span>
+        <span class="char-tag">موهوب / ملعون</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="section-divider"></div>
+
+<!-- KINGDOMS -->
+<section id="kingdoms">
+  <div class="section-header fade-up">
+    <span class="section-label">عوالم الملحمة</span>
+    <h2 class="section-title">الممالك</h2>
+    <p class="section-title-en" style="display:none">The Kingdoms</p>
+  </div>
+
+  <div class="kingdoms-tabs fade-up" id="kingdomTabs">
+    <button class="tab-btn active" onclick="switchKingdom(0)">المملكة الأولى</button>
+    <button class="tab-btn" onclick="switchKingdom(1)">المملكة الثانية</button>
+    <button class="tab-btn" onclick="switchKingdom(2)">المملكة الثالثة</button>
+    <button class="tab-btn" onclick="switchKingdom(3)" style="color: var(--text-muted); font-style: italic;">+ أضف مملكة</button>
+  </div>
+
+  <div class="tab-content active" id="kingdom-0">
+    <div class="kingdom-panel">
+      <p class="kingdom-name">اسم المملكة</p>
+      <p class="kingdom-subtitle">اسم المملكة · التأسيس: ??? · الحالة: نشطة</p>
+
+      <div class="kingdom-section-tabs">
+        <button class="k-tab active" onclick="switchKTab(0, 0)">التاريخ</button>
+        <button class="k-tab" onclick="switchKTab(0, 1)">الخريطة</button>
+        <button class="k-tab" onclick="switchKTab(0, 2)">المعلومات</button>
+      </div>
+
+      <div class="k-tab-content active" id="k0-0">
+        <p style="color: var(--text-secondary); line-height: 2; font-size: 1rem; font-style: italic;">
+          كلّ مملكة لها جرح تسمّيه قصة تأسيس. هذه بدأت بقسم أُدّي فوق النار
+          وعرش لم يكن له وارث شرعي — بل مطالبون على استعداد للنزيف من أجله.
+          اكتبي هنا تاريخ هذه المملكة كاملًا...
+        </p>
+      </div>
+
+      <div class="k-tab-content" id="k0-1">
+        <div class="map-placeholder">
+          <span style="font-size: 2rem; color: var(--border-bright);">⬡</span>
+          <span>ارفعي خريطة المملكة</span>
+          <span style="color: var(--text-muted); font-size: 0.55rem; letter-spacing: 0.15em;">اسحبي الصورة وأفلتيها هنا</span>
+        </div>
+      </div>
+
+      <div class="k-tab-content" id="k0-2">
+        <div class="kingdom-info-grid">
+          <div class="k-info-item">
+            <div class="stat-label">الحاكم</div>
+            <div class="stat-value">—</div>
+          </div>
+          <div class="k-info-item">
+            <div class="stat-label">العاصمة</div>
+            <div class="stat-value">—</div>
+          </div>
+          <div class="k-info-item">
+            <div class="stat-label">السكان</div>
+            <div class="stat-value">—</div>
+          </div>
+          <div class="k-info-item">
+            <div class="stat-label">نظام الحكم</div>
+            <div class="stat-value">—</div>
+          </div>
+          <div class="k-info-item">
+            <div class="stat-label">التحالفات</div>
+            <div class="stat-value">—</div>
+          </div>
+          <div class="k-info-item">
+            <div class="stat-label">الأعداء</div>
+            <div class="stat-value">—</div>
+          </div>
+        </div>
+        <p style="color: var(--text-muted); font-size: 0.9rem; font-style: italic;">أضيفي تفاصيل المملكة هنا...</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="tab-content" id="kingdom-1">
+    <div class="kingdom-panel">
+      <p class="kingdom-name">المملكة الثانية</p>
+      <p class="kingdom-subtitle">المملكة الثانية · التفاصيل قادمة</p>
+      <p style="color: var(--text-muted); font-style: italic; font-size: 1rem;">أسرار هذه المملكة لم تُكشف بعد...</p>
+    </div>
+  </div>
+
+  <div class="tab-content" id="kingdom-2">
+    <div class="kingdom-panel">
+      <p class="kingdom-name">المملكة الثالثة</p>
+      <p class="kingdom-subtitle">المملكة الثالثة · التفاصيل قادمة</p>
+      <p style="color: var(--text-muted); font-style: italic; font-size: 1rem;">أسرار هذه المملكة لم تُكشف بعد...</p>
+    </div>
+  </div>
+
+  <div class="tab-content" id="kingdom-3">
+    <div class="kingdom-panel" style="text-align:center; padding: 60px;">
+      <p style="font-family:'Cinzel',serif; font-size:0.65rem; letter-spacing:0.3em; text-transform:uppercase; color: var(--text-muted);">مملكة جديدة — القالب جاهز</p>
+    </div>
+  </div>
+</section>
+
+<div class="section-divider"></div>
+
+<!-- LEGENDS & LORE -->
+<section id="legends">
+  <div class="section-header fade-up">
+    <span class="section-label">ما تذكره العصور</span>
+    <h2 class="section-title">الأساطير والموروث</h2>
+    <p class="section-title-en" style="display:none">Legends & Lore</p>
+  </div>
+
+  <div class="fade-up">
+    <div class="legend-card" onclick="toggleLegend(this)">
+      <span class="legend-expand-btn">+</span>
+      <p class="legend-era">العصر الأول · ما قبل الانقسام</p>
+      <p class="legend-title">أسطورة اللهب الأول</p>
+      <p class="legend-excerpt">"يقال إن النار الأولى لم تُشعلها أيدٍ بشرية..."</p>
+      <div class="legend-body">
+        <p style="color: var(--text-secondary); line-height: 2; font-size: 1rem;">
+          اكتبي الأسطورة كاملة هنا. هنا يسكن الموروث العميق — الأساطير التي تستشهد بها الشخصيات،
+          والنبوءات التي تحرّك الحبكة، والتاريخ الذي لا يتذكّره أحدٌ حيّ
+          لكنه شكّل كلّ شيء. أضيفي ما تشائين الكشف عنه للقرّاء.
+        </p>
+      </div>
+    </div>
+
+    <div class="legend-card" onclick="toggleLegend(this)">
+      <span class="legend-expand-btn">+</span>
+      <p class="legend-era">العصر الثاني · حقبة الممالك</p>
+      <p class="legend-title">عهد الدماء السبع</p>
+      <p class="legend-excerpt">"سبعة حكّام. سبع جراح. وعدٌ واحد حطّم العالم."</p>
+      <div class="legend-body">
+        <p style="color: var(--text-secondary); line-height: 2; font-size: 1rem;">
+          نصّ الأسطورة كاملًا هنا...
+        </p>
+      </div>
+    </div>
+
+    <div class="legend-card" onclick="toggleLegend(this)">
+      <span class="legend-expand-btn">+</span>
+      <p class="legend-era">العصر الثالث · الحاضر</p>
+      <p class="legend-title">نبوءة العرش المجهول</p>
+      <p class="legend-excerpt">"لا أحد يرثه. إنه من يختار. ولم يختر بعد."</p>
+      <div class="legend-body">
+        <p style="color: var(--text-secondary); line-height: 2; font-size: 1rem;">
+          نصّ النبوءة كاملًا هنا...
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="section-divider"></div>
+
+<!-- THEORIES & ANALYSIS — public comments -->
+<section id="theories">
+  <div class="section-header fade-up">
+    <span class="section-label">نقاشات القرّاء</span>
+    <h2 class="section-title">النظريات والتحليلات</h2>
+    <p class="section-title-en" style="display:none">Theories & Analysis</p>
+  </div>
+
+  <div class="comment-area fade-up" id="theoriesList">
+    <div class="comment-card">
+      <div class="comment-header">
+        <div class="comment-avatar">A</div>
+        <div>
+          <p class="comment-name">Ariadne</p>
+          <p class="comment-date">أبريل ٢٠٢٥</p>
+        </div>
+      </div>
+      <p class="comment-text">
+        الطريقة التي وُصف بها حاملو القوى في الفصل الثالث — أعتقد أن دروسيلا قد تكون واحدة منهم
+        دون أن تعلم. استعارة "النار الباردة" تتكرر في كلّ لحظة مرتبطة بقراراتها...
+      </p>
+    </div>
+
+    <div class="comment-card">
+      <div class="comment-header">
+        <div class="comment-avatar">M</div>
+        <div>
+          <p class="comment-name">Mazhar</p>
+          <p class="comment-date">مارس ٢٠٢٥</p>
+        </div>
+      </div>
+      <p class="comment-text">
+        أسطورة الدماء السبع لا بدّ أن تكون مرتبطة بالحبكة الرئيسية. سبعة بيوت ملكية، سبعة فصول في الجزء الأول...
+        لا يمكن أن يكون هذا مصادفة. نظريتي أن كلّ فصل يمثّل دمًا واحدًا.
+      </p>
+    </div>
+  </div>
+
+  <div class="comment-form fade-up">
+    <h3>✦ &nbsp; أضف نظريتك</h3>
+    <div class="form-row">
+      <div class="form-field">
+        <label>Name or Alias</label>
+        <input type="text" id="theory-name" placeholder="اسمك...">
+      </div>
+      <div class="form-field">
+        <label>Theory Title</label>
+        <input type="text" id="theory-title" placeholder="اعطِ نظريتك عنوانًا...">
+      </div>
+    </div>
+    <div class="form-field" style="margin-bottom: 16px;">
+      <label>Your Theory</label>
+      <textarea id="theory-body" placeholder="شاركي تحليلك وتوقعاتك والروابط التي لاحظتيها..."></textarea>
+    </div>
+    <button class="btn btn-solid" onclick="submitTheory()">أرسلي النظرية</button>
+  </div>
+</section>
+
+<div class="section-divider"></div>
+
+<!-- FEEDBACK — private -->
+<section id="feedback">
+  <div class="section-header fade-up">
+    <span class="section-label">ملاحظات القرّاء الخاصة</span>
+    <h2 class="section-title">ملاحظات القراء</h2>
+    <p class="section-title-en" style="display:none">Your Feedback</p>
+  </div>
+
+  <div class="feedback-form fade-up">
+    <div class="feedback-note">
+      🔒 &nbsp; ملاحظاتك خاصة — الكاتبة وحدها تستطيع قراءتها. لن تُعرض للعموم.
+    </div>
+
+    <div class="form-row">
+      <div class="form-field">
+        <label>Your Name (optional)</label>
+        <input type="text" id="fb-name" placeholder="قارئ مجهول...">
+      </div>
+      <div class="form-field">
+        <label>Chapters Read</label>
+        <input type="text" id="fb-chapters" placeholder="مثال: ١–٥">
+      </div>
+    </div>
+
+    <div class="form-field" style="margin-bottom: 14px;">
+      <label>Overall Impression</label>
+      <div style="display: flex; gap: 10px; margin-top: 4px;" id="rating-stars">
+        <span class="star-btn" onclick="setRating(1)" style="font-size:1.4rem; cursor:pointer; color: var(--text-muted);">★</span>
+        <span class="star-btn" onclick="setRating(2)" style="font-size:1.4rem; cursor:pointer; color: var(--text-muted);">★</span>
+        <span class="star-btn" onclick="setRating(3)" style="font-size:1.4rem; cursor:pointer; color: var(--text-muted);">★</span>
+        <span class="star-btn" onclick="setRating(4)" style="font-size:1.4rem; cursor:pointer; color: var(--text-muted);">★</span>
+        <span class="star-btn" onclick="setRating(5)" style="font-size:1.4rem; cursor:pointer; color: var(--text-muted);">★</span>
+      </div>
+    </div>
+
+    <div class="form-field" style="margin-bottom: 14px;">
+      <label>Favourite Character (so far)</label>
+      <input type="text" id="fb-char" placeholder="من أسرَك؟">
+    </div>
+
+    <div class="form-field" style="margin-bottom: 14px;">
+      <label>What you loved</label>
+      <textarea id="fb-loved" placeholder="الأسلوب، الإيقاع، مشهد معيّن..."></textarea>
+    </div>
+
+    <div class="form-field" style="margin-bottom: 20px;">
+      <label>What could be improved</label>
+      <textarea id="fb-improve" placeholder="الملاحظة الصادقة هديّة..."></textarea>
+    </div>
+
+    <div class="form-field" style="margin-bottom: 24px;">
+      <label>Anything else you'd like to say</label>
+      <textarea id="fb-other" placeholder="أسئلة، توقعات، مشاعر..."></textarea>
+    </div>
+
+    <button class="btn btn-solid" onclick="submitFeedback()">أرسلي ملاحظاتك</button>
+    <p id="fb-confirm" style="display:none; color: var(--gold); font-family:'Cinzel',serif; font-size:0.7rem; letter-spacing:0.2em; margin-top: 16px; text-align:center;">
+      ✦ &nbsp; وصلت كلماتك. شكرًا لك. &nbsp; ✦
+    </p>
+  </div>
+</section>
+
+<div class="section-divider"></div>
+
+<!-- AUTHOR -->
+<section id="author">
+  <div class="section-header fade-up">
+    <span class="section-label">صاحبة الملحمة</span>
+    <h2 class="section-title">الكاتبة</h2>
+    <p class="section-title-en" style="display:none">Author & Updates</p>
+  </div>
+
+  <div class="author-section fade-up">
+    <div>
+      <div class="author-portrait">
+        <span class="author-symbol">م</span>
+        <span style="font-family:'Cinzel',serif; font-size:0.6rem; letter-spacing:0.2em; text-transform:uppercase; color: var(--text-muted);">صورة الكاتبة</span>
+      </div>
+      <div style="padding: 20px 0;">
+        <p style="font-family:'Amiri',serif; font-size:1.4rem; color: var(--text-primary); margin-bottom: 4px;">الكاتبة</p>
+        <p style="font-family:'Cinzel',serif; font-size:0.65rem; letter-spacing:0.2em; color: var(--gold-dim); text-transform:uppercase; margin-bottom: 16px;">كاتبة ملحمة دروسيلا</p>
+        <p style="color: var(--text-secondary); font-size: 1rem; font-style: italic; line-height: 1.9;">
+          اكتبي نبذتك هنا. تحدّثي عمّا ألهمكِ لكتابة الملحمة،
+          وعمّا يحرّك قلمكِ، وماذا تعني لكِ ملحمة دروسيلا.
+        </p>
+      </div>
+    </div>
+
+    <div>
+      <p style="font-family:'Cinzel',serif; font-size:0.65rem; letter-spacing:0.3em; text-transform:uppercase; color: var(--gold-dim); margin-bottom: 24px;">آخر الأخبار</p>
+
+      <div class="update-item">
+        <p class="update-date">أبريل ٢٠٢٥</p>
+        <p class="update-title">الفصل الخامس — المسوّدة مكتملة</p>
+        <p style="color: var(--text-secondary); font-size: 0.95rem; font-style: italic;">الفصل الأصعب حتى الآن. شيء ما تحوّل في النهاية لم أخطّط له. الشخصيات هي من قرّرت.</p>
+      </div>
+
+      <div class="update-item">
+        <p class="update-date">مارس ٢٠٢٥</p>
+        <p class="update-title">خريطة المملكة — أول رسم</p>
+        <p style="color: var(--text-secondary); font-size: 0.95rem; font-style: italic;">الجغرافيا أصبحت منطقية أخيرًا. ثلاث ممالك، حدودان متنازع عليهما، وبحرٌ ملعون.</p>
+      </div>
+
+      <div class="update-item">
+        <p class="update-date">فبراير ٢٠٢٥</p>
+        <p class="update-title">الملحمة تبدأ</p>
+        <p style="color: var(--text-secondary); font-size: 0.95rem; font-style: italic;">الكلمات الأولى كُتبت. العالم حيٌّ الآن.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <p class="footer-title">ملحمة دروسيلا</p>
+  <p style="font-family:'Cinzel',serif; font-size:0.65rem; letter-spacing:0.3em; color: var(--text-muted);">ملحمة دروسيلا</p>
+  <div style="width: 120px; height: 1px; background: linear-gradient(90deg, transparent, var(--gold-dim), transparent); margin: 20px auto;"></div>
+  <p class="footer-copy">© جميع الحقوق محفوظة. لا يُسمح بإعادة النشر دون إذن الكاتبة.</p>
+</footer>
+
+<script>
+  // ── Image Upload Helpers ──────────────────────────────────────────────
+
+  // Hero background image
+  function setHeroBg(event) {
+    const file = event.target.files[0];
+    if (!file) return;
+    const url = URL.createObjectURL(file);
+    const overlay = document.getElementById('heroBgImg');
+    overlay.style.backgroundImage = `url('${url}')`;
+    overlay.style.display = 'block';
+  }
+
+  // Character thumbnail upload (card grid)
+  const charImages = {}; // store per charId
+
+  function triggerCharUpload(charId, placeholderId) {
+    const input = document.createElement('input');
+    input.type = 'file';
+    input.accept = 'image/*';
+    input.onchange = (e) => {
+      const file = e.target.files[0];
+      if (!file) return;
+      const url = URL.createObjectURL(file);
+      charImages[charId] = url;
+      // Update thumbnail
+      const ph = document.getElementById(placeholderId);
+      if (ph) {
+        ph.style.display = 'none';
+        let existing = ph.parentElement.querySelector('img.char-thumbnail');
+        if (!existing) {
+          existing = document.createElement('img');
+          existing.className = 'char-thumbnail';
+          existing.style.cssText = 'width:100%;height:100%;object-fit:cover;position:absolute;inset:0;';
+          ph.parentElement.insertBefore(existing, ph);
+        }
+        existing.src = url;
+      }
+    };
+    input.click();
+  }
+
+  // Modal image upload
+  function triggerModalImgUpload() {
+    document.getElementById('modalImgInput').click();
+  }
+
+  function setModalImg(event) {
+    const file = event.target.files[0];
+    if (!file) return;
+    const url = URL.createObjectURL(file);
+    const area = document.getElementById('modalImgInput').closest('.modal-img-area');
+    const ph = document.getElementById('modal-img-placeholder');
+    ph.style.display = 'none';
+    let existing = area.querySelector('img.modal-char-img');
+    if (!existing) {
+      existing = document.createElement('img');
+      existing.className = 'modal-char-img';
+      existing.style.cssText = 'width:100%;height:100%;object-fit:cover;position:absolute;inset:0;';
+      area.insertBefore(existing, area.firstChild);
+    }
+    existing.src = url;
+    // Also store for this character
+    if (currentCharId) charImages[currentCharId] = url;
+  }
+
+  // Race logo upload
+  function triggerRaceLogoUpload(logoArea) {
+    logoArea.querySelector('input[type=file]').click();
+  }
+
+  function loadRaceLogo(input) {
+    const file = input.files[0];
+    if (!file) return;
+    const url = URL.createObjectURL(file);
+    const logoArea = input.closest('.race-logo-area');
+    const placeholder = logoArea.querySelector('.race-logo-placeholder');
+    if (placeholder) placeholder.style.display = 'none';
+    let existing = logoArea.querySelector('img.race-logo-img');
+    if (!existing) {
+      existing = document.createElement('img');
+      existing.className = 'race-logo-img';
+      logoArea.insertBefore(existing, logoArea.firstChild);
+    }
+    existing.src = url;
+  }
+
+  // ── Characters data ───────────────────────────────────────────────────
+  let currentCharId = null;
+
+  const chars = {
+    drusilla: {
+      role: 'البطلة',
+      nameAr: 'دروسيلا',
+      nameEn: 'Drusilla',
+      placeholder: 'د',
+      bio: 'وُلدت في عالم قرّر مصيرها مسبقًا. دروسيلا تحمل اسمًا أثقل مما تعلم. قصّتها ليست قصة قدر مختار — بل قصة تمرّد مختار. أضيفي سيرتها الكاملة هنا.',
+      stats: [
+        { label: 'الجنس', value: 'بشري · نبيل' },
+        { label: 'MBTI', value: 'INTJ' },
+        { label: 'الولاء', value: 'سيُكشف لاحقًا' },
+        { label: 'القوة', value: 'كامنة · مجهولة' },
+        { label: 'العمر', value: '—' },
+        { label: 'الحالة', value: 'نشطة' }
+      ],
+      tags: ['استراتيجية', 'دم نبيل', 'INTJ', 'البطلة', 'حاملة قوى؟']
+    }
+  };
+
+  function openChar(id) {
+    const c = chars[id];
+    if (!c) return;
+    currentCharId = id;
+    document.getElementById('modal-role').textContent = c.role;
+    document.getElementById('modal-name-ar').textContent = c.nameAr;
+    document.getElementById('modal-name-en').textContent = c.nameEn;
+
+    const ph = document.getElementById('modal-img-placeholder');
+    ph.textContent = c.placeholder;
+
+    // Restore previously uploaded image if any
+    const area = ph.closest('.modal-img-area');
+    let existingImg = area.querySelector('img.modal-char-img');
+    if (charImages[id]) {
+      ph.style.display = 'none';
+      if (!existingImg) {
+        existingImg = document.createElement('img');
+        existingImg.className = 'modal-char-img';
+        existingImg.style.cssText = 'width:100%;height:100%;object-fit:cover;position:absolute;inset:0;';
+        area.insertBefore(existingImg, area.firstChild);
+      }
+      existingImg.src = charImages[id];
+      existingImg.style.display = 'block';
+    } else {
+      ph.style.display = '';
+      if (existingImg) existingImg.style.display = 'none';
+    }
+
+    document.getElementById('modal-bio').textContent = c.bio;
+    const statsEl = document.getElementById('modal-stats');
+    statsEl.innerHTML = c.stats.map(s =>
+      `<div class="stat-item"><div class="stat-label">${s.label}</div><div class="stat-value">${s.value}</div></div>`
+    ).join('');
+    const tagsEl = document.getElementById('modal-tags');
+    tagsEl.innerHTML = c.tags.map(t =>
+      `<span class="char-tag ${t === 'INTJ' ? 'mbti' : ''}">${t}</span>`
+    ).join('');
+    document.getElementById('charModal').classList.add('active');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeChar() {
+    document.getElementById('charModal').classList.remove('active');
+    document.body.style.overflow = '';
+    currentCharId = null;
+  }
+
+  function closeModalOutside(e) {
+    if (e.target === document.getElementById('charModal')) closeChar();
+  }
+
+  // Kingdom tabs
+  function switchKingdom(i) {
+    document.querySelectorAll('#kingdomTabs .tab-btn').forEach((b, j) => b.classList.toggle('active', i === j));
+    document.querySelectorAll('[id^="kingdom-"]').forEach((el, j) => el.classList.toggle('active', i === j));
+  }
+
+  // Kingdom sub-tabs
+  function switchKTab(ki, ti) {
+    const panel = document.getElementById('kingdom-' + ki);
+    panel.querySelectorAll('.k-tab').forEach((b, j) => b.classList.toggle('active', ti === j));
+    panel.querySelectorAll('.k-tab-content').forEach((el, j) => el.classList.toggle('active', ti === j));
+  }
+
+  // Legends accordion
+  function toggleLegend(el) {
+    el.classList.toggle('open');
+  }
+
+  // Rating
+  let currentRating = 0;
+  function setRating(n) {
+    currentRating = n;
+    document.querySelectorAll('.star-btn').forEach((s, i) => {
+      s.style.color = i < n ? 'var(--gold)' : 'var(--text-muted)';
+    });
+  }
+
+  // Theory submit
+  function submitTheory() {
+    const name = document.getElementById('theory-name').value.trim() || 'مجهول';
+    const title = document.getElementById('theory-title').value.trim();
+    const body = document.getElementById('theory-body').value.trim();
+    if (!body) return;
+    const card = document.createElement('div');
+    card.className = 'comment-card';
+    const initials = name.slice(0, 1).toUpperCase();
+    const now = new Date().toLocaleDateString('ar-SA', { month: 'long', year: 'numeric' });
+    card.innerHTML = `
+      <div class="comment-header">
+        <div class="comment-avatar">${initials}</div>
+        <div>
+          <p class="comment-name">${name}</p>
+          ${title ? `<p style="font-style:italic; color:var(--gold); font-size:0.85rem; font-family:'Cinzel',serif; letter-spacing:0.05em;">${title}</p>` : ''}
+          <p class="comment-date">${now}</p>
+        </div>
+      </div>
+      <p class="comment-text">${body}</p>`;
+    document.getElementById('theoriesList').appendChild(card);
+    document.getElementById('theory-name').value = '';
+    document.getElementById('theory-title').value = '';
+    document.getElementById('theory-body').value = '';
+    card.scrollIntoView({ behavior: 'smooth', block: 'center' });
+  }
+
+  // Feedback submit (simulated private)
+  function submitFeedback() {
+    const confirm = document.getElementById('fb-confirm');
+    confirm.style.display = 'block';
+    ['fb-name','fb-chapters','fb-char','fb-loved','fb-improve','fb-other'].forEach(id => {
+      document.getElementById(id).value = '';
+    });
+    setRating(0);
+  }
+
+  // Scroll animations
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+  }, { threshold: 0.1 });
+
+  document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+</script>
+</body>
+</html>
